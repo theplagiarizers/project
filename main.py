@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+import dvc
 def load_data():
     """_summary_
     This function is used to load the data from the csv file.
@@ -10,6 +10,14 @@ def load_data():
     
     return data
 def preprocess_data(data):
+    """_summary_
+
+    Args:
+        data (_type_): _description_
+    
+    Returns:
+        _type_: _description_
+    """
     # removing the null values
     data = data.dropna()
     # removing the duplicates

@@ -132,6 +132,7 @@ venv.bak/
 .project
 project/
 
+mlruns/
 # Spyder project settings
 .spyderproject
 .spyproject
