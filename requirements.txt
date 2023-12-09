@@ -1,0 +1,5 @@
+sphinx==5.3.0
+fsspec==2022.11.0
+dvc==2.10.2
+urllib3<2.0
+mlflow==1.30.1
