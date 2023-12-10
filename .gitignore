@@ -132,7 +132,13 @@ venv.bak/
 .project
 project/
 
+# MLflow
 mlruns/
+mlartifacts/
+outputs/
+mlruns.db
+**/basic_auth.db
+
 # Spyder project settings
 .spyderproject
 .spyproject

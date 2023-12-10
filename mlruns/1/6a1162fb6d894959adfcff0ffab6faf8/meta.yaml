@@ -1,8 +1,9 @@
 artifact_uri: file:///E:/i200410/Semester%207/MLOps/Project/mlruns/1/6a1162fb6d894959adfcff0ffab6faf8/artifacts
+deleted_time: 1702211728255
 end_time: 1701969335868
 entry_point_name: ''
 experiment_id: '1'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: 6a1162fb6d894959adfcff0ffab6faf8
 run_name: Random Forest Run 1
 run_uuid: 6a1162fb6d894959adfcff0ffab6faf8
