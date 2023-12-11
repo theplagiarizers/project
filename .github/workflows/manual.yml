@@ -17,7 +17,10 @@ jobs:
           dvc --version
 
       - name: Pulling data from dvc
-        run: 'dvc pull'
+        run: |
+          dvc remote add -d myremote gdrive://${{ secrets.GDRIVE_LINK }}
+          dvc remote modify myremote gdrive_client_id "${{ secrets.GDRIVE_CLIENT_ID }}"
+          dvc --version
 
       - name: Add more data
         run: 'python generate_data.py'
