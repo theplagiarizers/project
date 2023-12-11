@@ -13,13 +13,15 @@ jobs:
       # Add your desired steps here
       - name: Install dvc
         run: |
-          pip install -r requirements.txt
+          pip install dvc[gdrive] pandas
           dvc --version
+          dvc remote add -f myremote gdrive://{{secrets.GDRIVE_LINK}}
+          dvc remote modify myremote gdrive_client_id '${{secrets.GDRIVE_CLIENT_ID}}'
 
       - name: Pulling data from dvc
         run: |
           dvc --version
-          dvc pull -r myremote
+          dvc pull
 
       - name: Add more data        
         run: |
