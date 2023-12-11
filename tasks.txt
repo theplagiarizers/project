@@ -1,6 +1,6 @@
 Rohaan
-    TBD
+    Handled model management and training
 Zubair
-    TBD
+    Handled containerization and deployment
 Ahmed Moiz
-    TBD
+    Handled data preprocessing and versioning

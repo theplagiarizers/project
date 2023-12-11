@@ -1,0 +1,16 @@
+artifact_uri: file:///E:/i200410/Semester%207/MLOps/Project/mlruns/1/7b06cc4f398b494da8409242c92c3ef9/artifacts
+deleted_time: 1702211728244
+end_time: 1701969415997
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: deleted
+run_id: 7b06cc4f398b494da8409242c92c3ef9
+run_name: Random Forest Run 1
+run_uuid: 7b06cc4f398b494da8409242c92c3ef9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1701969409790
+status: 3
+tags: []
+user_id: Honey
