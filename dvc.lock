@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  fetch_file:
+    cmd: dvc pull -r myremote
+  generate_data:
+    cmd: python generate_data.py
+    deps:
+    - path: generate_data.py
+      hash: md5
+      md5: 3872f2b8eafe62f878cc6eb0de818f9e
+      size: 2628
+  upload_file:
+    cmd: dvc push -r myremote
+    deps:
+    - path: data/dummy_sensor_data.csv
+      hash: md5
+      md5: 0fa11cd8fa3a0995b5ee8b22b2d3e0f5
+      size: 233560
