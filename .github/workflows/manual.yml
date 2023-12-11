@@ -13,7 +13,7 @@ jobs:
       # Add your desired steps here
       - name: Install dvc
         run: |
-          pip install dvc[gdrive] pandas numpy
+          pip install dvc[gdrive] pandas numpy cryptography==41.0.4
           dvc --version
 
       - name: Pulling data from dvc
