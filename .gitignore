@@ -134,9 +134,9 @@ project/
 
 # MLflow
 mlruns/
-mlartifacts/
+artifacts/
 outputs/
-mlruns.db
+mlflow.db
 **/basic_auth.db
 
 # Spyder project settings
@@ -149,6 +149,7 @@ mlruns.db
 # mkdocs documentation
 /site
 
+app/best_model/*
 # mypy
 .mypy_cache/
 .dmypy.json

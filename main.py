@@ -4,8 +4,9 @@ import subprocess
 import dvc
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score 
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, f1_score
 import mlflow.sklearn, mlflow
+from mlflow.models import infer_signature
 from mlflow import MlflowClient
 
 def load_data():
@@ -78,7 +79,8 @@ def start():
     # Set the run name to identify the experiment run
     run_name = "Project"
     # Connecting to the MLflow server
-    client = MlflowClient(tracking_uri="http://localhost:8080")
+    client = MlflowClient(tracking_uri="http://mlflow.rohaan.xyz:5000")
+    mlflow.set_tracking_uri("http://mlflow.rohaan.xyz:5000")
     random_forest_experiment = mlflow.set_experiment("Project")
     
     
@@ -103,18 +105,21 @@ def start():
         print("======> Step 6. Evaluating the model.... <======")
         # Make predictions on the test set
         y_pred = rf.predict(X_test)
+        signature = infer_signature(X_test, y_pred)
         
         # Evaluate the model using mean squared error
         mse = mean_squared_error(y_test, y_pred)
         mae = mean_absolute_error(y_test, y_pred)
         r2 = r2_score(y_test, y_pred)
+        RFScore = rf.score(X_test, y_test)
         rmse = np.sqrt(mse)
-        print(f"Evaluation Errors: MSE[{mse}], MAE[{mae}], R2[{r2}], RMSE[{rmse}]")
+        print(f"Evaluation Errors: MSE[{mse}], MAE[{mae}], R2[{r2}], RMSE[{rmse}], F1[{RFScore}]")
         mlflow_metrics = {
             "mse": mse,
             "mae": mae,
             "r2": r2,
-            "rmse": rmse
+            "rmse": rmse,
+            "f1": RFScore
         }
         
         # Log the parameters usend for the model fit
@@ -134,8 +139,29 @@ def start():
         best_model = rf.best_estimator_
         best_params = rf.best_params_
         
-        # Saving the best model
+        # Get the best model from the MLflow experiment
+        best_run = client.search_runs(
+            experiment_ids=random_forest_experiment.experiment_id,
+            order_by=["metrics.training_mse ASC"],
+            max_results=1,
+        )[0]
+    
+        print("Best Run:", best_run.info.run_id)
+        # Clear app/best_model folder if it exists
+        subprocess.call(['rm', '-rf', 'app/best_model'])
+        # Saving the best model, overwriting the previous best model
+        # saving best_run as a pickle file
+        
         mlflow.sklearn.save_model(best_model, "app/best_model")
+        
+        # Register the best model with MLflow
+        mlflow.sklearn.log_model(
+            sk_model=best_model,
+            artifact_path="sklearn-model",
+            signature= signature,
+            registered_model_name="random-forest-best",
+        )
+        
         print("Model deployed successfully!")
     else:
         print("Skipping model deployment...")
