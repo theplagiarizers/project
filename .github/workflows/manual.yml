@@ -12,7 +12,9 @@ jobs:
 
       # Add your desired steps here
       - name: Install dvc
-        run: 'pip install dvc[gdrive]'
+        run: |
+          pip install dvc[gdrive] pandas numpy
+          dvc --version
 
       - name: Pulling data from dvc
         run: 'dvc pull'
