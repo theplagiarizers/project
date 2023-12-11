@@ -18,11 +18,13 @@ jobs:
 
       - name: Pulling data from dvc
         run: |
-          dvc remote add -d myremote gdrive://${{ secrets.GDRIVE_LINK }}
           dvc --version
+          dvc pull -r myremote
 
-      - name: Add more data
-        run: 'python generate_data.py'
+      - name: Add more data        
+        run: |
+          python generate_data.py
+          dvc add data/dummy_sensor_data.csv
 
       - name: Push data back to gdrive
         run: 'dvc push -r myremote'
