@@ -1,0 +1,5 @@
+stages:
+  generate_data:
+    cmd: python generate_data.py
+    outs:
+      - data/dummy_censor_data.csv
