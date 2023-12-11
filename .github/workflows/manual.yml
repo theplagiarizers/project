@@ -1,4 +1,4 @@
-name: Manual Workflow
+name: Simulate Sensor Data Addition
 on:
   workflow_dispatch:
 
