@@ -18,3 +18,4 @@ stages:
     deps:
       - data/dummy_sensor_data.csv
     outs: []
+
