@@ -121,6 +121,13 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
+# MLflow
+mlruns/
+artifacts/
+outputs/
+mlflow.db
+**/basic_auth.db
+
 # Environments
 .env
 .venv
