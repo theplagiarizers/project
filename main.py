@@ -137,10 +137,29 @@ def start():
         best_model = rf.best_estimator_
         best_params = rf.best_params_
         
-        # Clear 'app/best_model' directory 
+        # Get the best model from the MLflow experiment
+        best_run = client.search_runs(
+            experiment_ids=random_forest_experiment.experiment_id,
+            order_by=["metrics.training_mse ASC"],
+            max_results=1,
+        )[0]
+    
+        print("Best Run:", best_run.info.run_id)
+        # Clear app/best_model folder if it exists
         subprocess.call(['rm', '-rf', 'app/best_model'])
-        # Saving the best model
+        # Saving the best model, overwriting the previous best model
+        # saving best_run as a pickle file
+        
         mlflow.sklearn.save_model(best_model, "app/best_model")
+        
+        # Register the best model with MLflow
+        mlflow.sklearn.log_model(
+            sk_model=best_model,
+            artifact_path="sklearn-model",
+            signature= signature,
+            registered_model_name="random-forest-best",
+        )
+        
         print("Model deployed successfully!")
     else:
         print("Skipping model deployment...")
