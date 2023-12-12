@@ -5,8 +5,10 @@ import dvc
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score 
+from mlflow.models import infer_signature
 import mlflow.sklearn, mlflow
 from mlflow import MlflowClient
+from train import preprocess_data
 
 def load_data():
     """_summary_
@@ -16,34 +18,12 @@ def load_data():
     data = pd.read_csv('data/dummy_sensor_data.csv')
     return data
 
-def preprocess_data(data):
-    """_summary_
-
-    Args:
-        data (_type_): _description_
-    
-    Returns:
-        _type_: _description_
-    """
-    # removing the null values
-    data = data.dropna()
-    # removing the duplicates
-    data = data.drop_duplicates()
-    
-    # Hot Encoding the categorical data
-    data = pd.get_dummies(data, columns=['Machine_ID', 'Sensor_ID'])
-    # Feature Extraction
-    data['Timestamp'] = pd.to_datetime(data['Timestamp'])
-    data['Hour'] = data['Timestamp'].dt.hour
-    data['DayOfWeek'] = data['Timestamp'].dt.dayofweek
-    data['Month'] = data['Timestamp'].dt.month
-    return data
 def start():
     """_summary_
     This function is the starting point of the program.
     """
     print("Simulate Sensor Data Generation? (y/N)")
-    choice = input()
+    choice = 'n'
     if choice == 'y' :
         subprocess.call(['python', 'generate_data.py'])
     else:
@@ -97,13 +77,15 @@ def start():
             
         }
         # rf = RandomForestRegressor(**params)
-        rf = GridSearchCV(RandomForestRegressor(), param_grid, cv=5)
+        rf = GridSearchCV(RandomForestRegressor(), param_grid, cv=5, scoring='r2')
         # Train the model
         rf.fit(X_train, y_train)
 
         print("======> Step 6. Evaluating the model.... <======")
         # Make predictions on the test set
-        y_pred = rf.predict(X_test)
+        y_pred = rf.predict(X_test)        
+        signature = infer_signature(X_test, y_pred)
+
         
         # Evaluate the model using mean squared error
         mse = mean_squared_error(y_test, y_pred)
@@ -131,7 +113,7 @@ def start():
     
     print("======> Step 7. Deploy Best Model <======")
     print("Do you want to deploy the best model? (Y/n)")
-    choice = input()
+    choice = 'y'
     if choice != 'n':
         print("Deploying the best model...")
         best_model = rf.best_estimator_
