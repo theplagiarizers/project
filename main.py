@@ -78,7 +78,8 @@ def start():
     # Set the run name to identify the experiment run
     run_name = "Project"
     # Connecting to the MLflow server
-    client = MlflowClient(tracking_uri="http://localhost:8080")
+    client = MlflowClient(tracking_uri="http://mlflow.rohaan.xyz:5000")
+    mlflow.set_tracking_uri("http://mlflow.rohaan.xyz:5000")
     random_forest_experiment = mlflow.set_experiment("Project")
     
     
@@ -109,19 +110,21 @@ def start():
         mae = mean_absolute_error(y_test, y_pred)
         r2 = r2_score(y_test, y_pred)
         rmse = np.sqrt(mse)
+        score = rf.best_score_
         print(f"Evaluation Errors: MSE[{mse}], MAE[{mae}], R2[{r2}], RMSE[{rmse}]")
         mlflow_metrics = {
             "mse": mse,
             "mae": mae,
             "r2": r2,
-            "rmse": rmse
+            "rmse": rmse,
+            "score": score
         }
         
         # Log the parameters usend for the model fit
         # mlflow.log_params(params)
 
         # Log the error metrics that were calculated during validation
-        # mlflow.log_metrics(mlflow_metrics)
+        mlflow.log_metrics(mlflow_metrics)
 
         # Log an instance of the trained model for later use
         mlflow.sklearn.log_model(sk_model=rf, input_example=X_test, artifact_path=artifact_path)
@@ -134,6 +137,8 @@ def start():
         best_model = rf.best_estimator_
         best_params = rf.best_params_
         
+        # Clear 'app/best_model' directory 
+        subprocess.call(['rm', '-rf', 'app/best_model'])
         # Saving the best model
         mlflow.sklearn.save_model(best_model, "app/best_model")
         print("Model deployed successfully!")

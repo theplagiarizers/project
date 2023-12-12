@@ -43,6 +43,7 @@ mse = mean_squared_error(y_test, y_pred)
 mae = mean_absolute_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 rmse = np.sqrt(mse)
+
 print(f"Mean Squared Error: {mse}")
 
 # Assemble the metrics we're going to write into a collection

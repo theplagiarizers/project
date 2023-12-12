@@ -71,6 +71,9 @@ instance/
 # Sphinx documentation
 docs/_build/
 
+# mlflow 
+app/best_model/
+
 # PyBuilder
 .pybuilder/
 target/
