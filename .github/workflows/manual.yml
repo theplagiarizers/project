@@ -20,13 +20,14 @@ jobs:
       # Add your desired steps here
       - name: Install dvc
         run: |
+          python -m pip install --upgrade pip
+          pip install -U pyopenssl cryptography
           pip install dvc[s3] dvc-s3 pandas
           dvc --version
       - name: Setup DVC
         run: |
           dvc init
-          dvc remote add -f myremote s3://${{secrets.S3_LINK}}
-          dvc remote modify myremote version_aware true
+          dvc remote add -d aws s3://${{secrets.S3_LINK}}
       - name: Pulling data from dvc
         run: |
           dvc --version
@@ -38,4 +39,4 @@ jobs:
           dvc add data/dummy_sensor_data.csv
 
       - name: Push data back to gdrive
-        run: 'dvc push -r myremote'
+        run: 'dvc push -r aws'
