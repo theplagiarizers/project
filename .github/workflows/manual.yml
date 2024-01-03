@@ -28,7 +28,6 @@ jobs:
         run: |
           dvc init
           dvc remote add -d aws s3://${{secrets.S3_LINK}}
-          dvc remote modify aws version_aware true
       - name: Pulling data from dvc
         run: |
           dvc --version
