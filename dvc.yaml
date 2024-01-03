@@ -1,6 +1,6 @@
 stages:
   fetch_file:
-    cmd: dvc pull -r myremote
+    cmd: dvc pull -r aws
     deps: []
     outs: []
 
@@ -11,7 +11,7 @@ stages:
     outs: []
 
   upload_file:
-    cmd: dvc push -r myremote
+    cmd: dvc push -r aws
     deps:
       - data/dummy_sensor_data.csv
     outs: []
