@@ -20,6 +20,8 @@ jobs:
       # Add your desired steps here
       - name: Install dvc
         run: |
+          python -m pip install --upgrade pip
+          pip install -U pyopenssl cryptography
           pip install dvc[s3] dvc-s3 pandas
           dvc --version
       - name: Setup DVC
