@@ -13,6 +13,7 @@ def fetch_model():
     latest_model_version = model_metadata[0].version
     latest_model_name = model_metadata[0].name
     model_uri = client.get_model_version_download_uri(latest_model_name, latest_model_version)
+    client.download_artifacts(latest_model_name, latest_model_version, 'model')
     print(latest_model_version)
     
     # Load the model from mlflow as a PyFuncModel.
