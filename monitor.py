@@ -11,10 +11,12 @@ def fetch_model():
     mlflow.set_tracking_uri("http://mlflow.rohaan.xyz:5000")
     model_metadata = client.get_latest_versions(model_name, stages=["None"])
     latest_model_version = model_metadata[0].version
+    latest_model_name = model_metadata[0].name
+    model_uri = client.get_model_version_download_uri(latest_model_name, latest_model_version)
     print(latest_model_version)
     
     # Load the model from mlflow as a PyFuncModel.
-    model = mlflow.pyfunc.load_model(f"models:/{model_name}/{latest_model_version}")
+    model = mlflow.pyfunc.load_model(model_uri)
     return model
 
 def fetch_data(data_file_path = 'data/dummy_sensor_data.csv'): 
