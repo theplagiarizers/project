@@ -31,12 +31,4 @@ jobs:
       - name: Pulling data from dvc
         run: |
           dvc --version
-          dvc pull
-
-      - name: Add more data        
-        run: |
-          python generate_data.py
-          dvc add data/dummy_sensor_data.csv
-
-      - name: Push data back to gdrive
-        run: 'dvc push -r aws'
+          dvc repro

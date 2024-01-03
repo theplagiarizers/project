@@ -1,4 +1,0 @@
-[core]
-    remote = aws
-['remote "aws"']
-    url = s3://mlopsproj/dvc
