@@ -5,12 +5,13 @@ stages:
     deps:
     - path: generate_data.py
       md5: 9f2b32bbfa212339f94f2decff520815
-      size: 2744
+      size: 2673
   upload_file:
     cmd: dvc push -r aws
     deps:
     - path: data/dummy_sensor_data.csv
-      md5: 40d974a3a55cf1433a8945305ccd600d
-      size: 73532
+      hash: md5
+      md5: 1274742377ad30ba8ed1ae03cfd8705f
+      size: 96485
   fetch_file:
     cmd: dvc pull -r aws
