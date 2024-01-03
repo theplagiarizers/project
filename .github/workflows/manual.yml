@@ -25,8 +25,8 @@ jobs:
       - name: Setup DVC
         run: |
           dvc init
-          dvc remote add -f myremote s3://${{secrets.S3_LINK}}
-          dvc remote modify myremote version_aware true
+          dvc remote add -d aws s3://${{secrets.S3_LINK}}
+          dvc remote modify aws version_aware true
       - name: Pulling data from dvc
         run: |
           dvc --version
@@ -38,4 +38,4 @@ jobs:
           dvc add data/dummy_sensor_data.csv
 
       - name: Push data back to gdrive
-        run: 'dvc push -r myremote'
+        run: 'dvc push -r aws'
