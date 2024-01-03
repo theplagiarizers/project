@@ -36,7 +36,7 @@ jobs:
       - name: Pulling data from dvc
         run: |
           dvc --version
-          dvc repro
+          dvc repro --force
       - name: Save new files back to github repo
         run: |
           git add dvc.lock data/dummy_sensor_data.csv.dvc
