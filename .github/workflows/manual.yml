@@ -24,6 +24,7 @@ jobs:
           dvc --version
       - name: Setup DVC
         run: |
+          dvc init
           dvc remote add -f myremote s3://${{secrets.S3_LINK}}
           dvc remote modify myremote version_aware true
       - name: Pulling data from dvc
