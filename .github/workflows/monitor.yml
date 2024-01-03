@@ -1,0 +1,39 @@
+name: Monitor Model
+env:
+  AWS_ACCESS_KEY_ID: '${{secrets.AWS_ACCESS_KEY_ID}}'
+  AWS_SECRET_ACCESS_KEY: '${{secrets.AWS_SECRET_ACCESS_KEY}}'
+on:
+  schedule:
+    - cron: "0 0,12 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      # Add your desired steps here
+      - name: Configurations
+        run: |
+          git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_USER_NAME }}"
+
+      - name: Install dvc
+        run: |
+          python -m pip install --upgrade pip
+          pip install -U pyopenssl cryptography
+          pip install dvc[s3] dvc-s3 pandas
+          dvc --version
+      - name: Setup DVC
+        run: |
+          dvc init
+          dvc remote add -d aws s3://${{secrets.S3_LINK}}
+      - name: Pulling data from dvc
+        run: |
+          dvc --version
+          dvc pull
+      - name: Check Model Performance
+        run: |
+          python monitor.py
