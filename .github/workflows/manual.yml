@@ -32,3 +32,8 @@ jobs:
         run: |
           dvc --version
           dvc repro
+      - name: Save new files back to github repo
+        run: |
+          git add dvc.lock data/dummy_sensor_data.csv.dvc
+          git commit -m "Update .dvc files after running dvc repro"
+          git push origin main
