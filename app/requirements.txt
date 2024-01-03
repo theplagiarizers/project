@@ -1,4 +1,3 @@
 pandas==1.1.5
 numpy==1.21.6
-dvc==2.10.2
 Flask==2.2.5
