@@ -13,8 +13,8 @@ def fetch_model():
     latest_model_version = model_metadata[0].version
     print(latest_model_version)
     
-    # Load the model as a PyFuncModel.
-    model = pyfunc.load_model(f"models:/{model_name}/{latest_model_version}")
+    # Load the model from mlflow as a PyFuncModel.
+    model = mlflow.pyfunc.load_model(f"models:/{model_name}/{latest_model_version}")
     return model
 
 def fetch_data(data_file_path = 'data/dummy_sensor_data.csv'): 
