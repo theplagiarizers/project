@@ -1,4 +1,7 @@
 name: Simulate Sensor Data Addition
+env:
+  AWS_ACCESS_KEY_ID: '${{secrets.AWS_ACCESS_KEY_ID}}'
+  AWS_SECRET_ACCESS_KEY: '${{secrets.AWS_SECRET_ACCESS_KEY}}'
 on:
   workflow_dispatch:
 
@@ -10,14 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Setup Env Variables
+        run: |
+        
+
       # Add your desired steps here
       - name: Install dvc
         run: |
-          pip install dvc[gdrive] pandas
+          pip install dvc[s3] dvc-s3 pandas
           dvc --version
-          dvc remote add -f myremote gdrive://{{secrets.GDRIVE_LINK}}
-          dvc remote modify myremote gdrive_client_id '${{secrets.GDRIVE_CLIENT_ID}}'
-
+      - name: Setup DVC
+        run: |
+          dvc remote add -f myremote s3://${{secrets.S3_LINK}}
+          dvc remote modify myremote version_aware true
       - name: Pulling data from dvc
         run: |
           dvc --version
