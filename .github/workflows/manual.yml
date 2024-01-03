@@ -18,6 +18,11 @@ jobs:
         
 
       # Add your desired steps here
+      - name: Configurations
+        run: |
+          git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_USER_NAME }}"
+
       - name: Install dvc
         run: |
           python -m pip install --upgrade pip
