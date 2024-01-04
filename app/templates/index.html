@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parameter Selection</title>
+</head>
+<body>
+    <h1>Parameter Selection</h1>
+    <form action="/predict" method="get">
+        <label for="timestamp">Timestamp:</label>
+        <input type="text" id="timestamp" name="timestamp"><br><br>
+        
+        <label for="machine_id">Machine ID:</label>
+        <select id="machine_id" name="machine_id">
+            <option value="Machine_1">Machine 1</option>
+            <option value="Machine_2">Machine 2</option>
+            <option value="Machine_2">Machine 3</option>
+            <option value="Machine_2">Machine 4</option>
+            <option value="Machine_2">Machine 5</option>
+        </select><br><br>
+        
+        <label for="sensor_id">Sensor ID:</label>
+        <select id="sensor_id" name="sensor_id">
+            <option value="Sensor_1">Sensor 1</option>
+            <option value="Sensor_2">Sensor 2</option>
+            <option value="Sensor_2">Sensor 3</option>
+        </select><br><br>
+        
+        <input type="submit" value="Predict">
+    </form>
+</body>
+</html>
