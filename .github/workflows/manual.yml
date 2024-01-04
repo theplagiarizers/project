@@ -30,7 +30,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -U pyopenssl cryptography
-          pip install dvc==2.10.2 dvc-s3 pandas
+          pip install dvc==2.10.2 dvc[s3] pandas
           dvc --version
       - name: Setup DVC
         run: |
