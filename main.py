@@ -136,7 +136,7 @@ def start():
         # Register the best model with MLflow
         mlflow.sklearn.log_model(
             sk_model=best_model,
-            artifact_path="sklearn-model",
+            artifact_path=artifact_path,
             signature= signature,
             registered_model_name="random-forest-best",
         )
