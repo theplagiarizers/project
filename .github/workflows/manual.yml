@@ -32,7 +32,7 @@ jobs:
           dvc --version
       - name: Setup DVC
         run: |
-          dvc remote add -d aws s3://${{secrets.S3_LINK}}
+          dvc remote add -d --force aws s3://${{secrets.S3_LINK}}
       - name: Pulling data from dvc
         run: |
           dvc --version
