@@ -1,0 +1,18 @@
+stages:
+  fetch_file:
+    cmd: dvc pull -r aws
+    deps: []
+    outs: []
+
+  generate_data:
+    cmd: python generate_data.py
+    deps:
+      - generate_data.py
+    outs: []
+
+  upload_file:
+    cmd: dvc push -r aws
+    deps:
+      - data/dummy_sensor_data.csv
+    outs: []
+
