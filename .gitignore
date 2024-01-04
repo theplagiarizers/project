@@ -83,7 +83,6 @@ target/
 # Data 
 # data/
 .dvc/
-.dvc
 # IPython
 profile_default/
 ipython_config.py
