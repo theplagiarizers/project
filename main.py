@@ -131,7 +131,6 @@ def start():
         subprocess.call(['rm', '-rf', 'app/best_model'])
         # Saving the best model, overwriting the previous best model
         # saving best_run as a pickle file
-        
         mlflow.sklearn.save_model(best_model, "app/best_model")
         
         # Register the best model with MLflow
@@ -141,7 +140,6 @@ def start():
             signature= signature,
             registered_model_name="random-forest-best",
         )
-        
         print("Model deployed successfully!")
     else:
         print("Skipping model deployment...")

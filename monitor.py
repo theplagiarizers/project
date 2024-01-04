@@ -12,13 +12,17 @@ def fetch_model():
     model_metadata = client.get_latest_versions(model_name, stages=["None"])
     latest_model_version = model_metadata[0].version
     latest_model_name = model_metadata[0].name
+    latest_model_id = model_metadata[0].run_id
     model_uri = client.get_model_version_download_uri(latest_model_name, latest_model_version)
-    client.download_artifacts(latest_model_name, latest_model_version, 'model')
+    client.download_artifacts(latest_model_id, "model", 'app/best_model')
     print(latest_model_version)
     
     # Load the model from mlflow as a PyFuncModel.
     model = mlflow.pyfunc.load_model(model_uri)
     return model
+
+
+
 
 def fetch_data(data_file_path = 'data/dummy_sensor_data.csv'): 
     data = pd.read_csv(data_file_path)
