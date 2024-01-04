@@ -9,6 +9,7 @@ from mlflow.models import infer_signature
 import mlflow.sklearn, mlflow
 from mlflow import MlflowClient
 from train import preprocess_data
+import time
 
 def load_data():
     """_summary_
@@ -57,10 +58,14 @@ def start():
     artifact_path = "model"
     # Set the run name to identify the experiment run
     run_name = "Project"
+    s3_bucket = "s3://mlopsproj/artifacts"
+    experiment_name = "Project-" + str(int(time.time()))
     # Connecting to the MLflow server
     client = MlflowClient(tracking_uri="http://mlflow.rohaan.xyz:5000")
     mlflow.set_tracking_uri("http://mlflow.rohaan.xyz:5000")
-    random_forest_experiment = mlflow.set_experiment("Project")
+    # Generate experiment name as "Project-<timestamp>"
+    mlflow.create_experiment(experiment_name, artifact_location=s3_bucket)
+    random_forest_experiment = mlflow.set_experiment(experiment_name)
     
     
     mlflow.sklearn.autolog()
@@ -68,7 +73,7 @@ def start():
     with mlflow.start_run(run_name=run_name) as run:
         
         print("======> Step 5. Training the model.... <======")
-        
+        print(mlflow.get_artifact_uri())
         # Defining the parameters for the model 
         params = {"n_estimators": 100, "random_state": 42, "max_depth": 5}
         param_grid = {
@@ -107,6 +112,9 @@ def start():
 
         # Log the error metrics that were calculated during validation
         mlflow.log_metrics(mlflow_metrics)
+        
+        # Log model files (pkl)
+        
 
         # Log an instance of the trained model for later use
         mlflow.sklearn.log_model(sk_model=rf, input_example=X_test, artifact_path=artifact_path)
