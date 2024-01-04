@@ -1,0 +1,16 @@
+schema: '2.0'
+stages:
+  generate_data:
+    cmd: python generate_data.py
+    deps:
+    - path: generate_data.py
+      md5: 9f2b32bbfa212339f94f2decff520815
+      size: 2744
+  fetch_file:
+    cmd: dvc pull -r aws
+  upload_file:
+    cmd: dvc push -r aws
+    deps:
+    - path: data/dummy_sensor_data.csv
+      md5: 71bde5e3e33d37f3e1ac0d8d64299923
+      size: 98027
