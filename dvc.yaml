@@ -1,6 +1,6 @@
 stages:
   fetch_file:
-    cmd: dvc pull -r aws
+    cmd: dvc pull
     deps: []
     outs: []
 
