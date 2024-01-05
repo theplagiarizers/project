@@ -25,7 +25,9 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build the Docker image
-        run: docker build . --file dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/project:${{ github.run_number }}
+        run: |
+          ls
+          docker build . --tag ${{ secrets.DOCKERHUB_USERNAME }}/project:${{ github.run_number }}
 
       - name: Push Docker image
         run: |
