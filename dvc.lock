@@ -12,5 +12,5 @@ stages:
     cmd: dvc push -r aws
     deps:
     - path: data/dummy_sensor_data.csv
-      md5: e757a18359a9571a5508b12c5e684cb4
-      size: 24166
+      md5: f1143a498bfa2b19d75193652455f6d5
+      size: 48274
